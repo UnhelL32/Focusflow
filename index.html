@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Gamified Task & Deadline Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+    <!-- Mobile Sticky Header -->
+    <div class="mobile-header">
+        <div class="logo-area">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <h2>Focus<span>Flow</span></h2>
+        </div>
+        <div class="mobile-status">
+            <span class="mobile-level">Lv. <span id="mobile-level-val">1</span></span>
+            <span class="mobile-streak">🔥 <span id="mobile-streak-val">0</span></span>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h2>Focus<span>Flow</span></h2>
+            </div>
+            
+            <nav class="nav-links">
+                <button class="nav-btn active" id="nav-dashboard" onclick="switchTab('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-btn" id="nav-tasks" onclick="switchTab('tasks')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    <span>Tasks</span>
+                </button>
+                <button class="nav-btn" id="nav-focus" onclick="switchTab('focus')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    <span>Focus Space</span>
+                </button>
+                <button class="nav-btn" id="nav-categories" onclick="switchTab('categories')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <span>Aspects</span>
+                </button>
+            </nav>
+
+            <div class="user-level-card">
+                <div class="level-badge">Lv. <span id="user-level">1</span></div>
+                <div class="xp-container">
+                    <div class="xp-label">
+                        <span>XP Progress</span>
+                        <span id="xp-text">0 / 100 XP</span>
+                    </div>
+                    <div class="xp-bar-bg">
+                        <div class="xp-bar-fill" id="xp-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="streak-indicator">
+                    <span class="streak-fire">🔥</span>
+                    <span class="streak-label">Streak: <strong id="streak-count">0</strong> days</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header with notifications / dates -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h1 id="page-title">Dashboard Overview</h1>
+                    <p id="current-date-display">Wednesday, July 8, 2026</p>
+                </div>
+                <div class="header-actions">
+                    <button class="primary-btn" id="create-task-btn" onclick="openCreateTaskModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        New Task
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: DASHBOARD -->
+            <section id="tab-dashboard" class="tab-pane active">
+                <!-- Welcome & Motivation Panel -->
+                <div class="glass-panel welcome-panel">
+                    <div class="welcome-text">
+                        <h3>Welcome Back, Achiever!</h3>
+                        <p class="motivation-quote" id="motivational-quote-display">"The secret of getting ahead is getting started."</p>
+                        <p class="quote-author" id="motivational-author-display">— Mark Twain</p>
+                    </div>
+                    <div class="welcome-action">
+                        <button class="secondary-btn btn-sm" onclick="getNewQuote()">
+                            💥 Get Spark
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Counters Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card glass-panel border-cyan">
+                        <div class="stat-icon icon-cyan">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <h4 id="stat-total-tasks">0</h4>
+                            <p>Total Tasks</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel border-amber">
+                        <div class="stat-icon icon-amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <h4 id="stat-pending-tasks">0</h4>
+                            <p>Pending Tasks</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel border-green">
+                        <div class="stat-icon icon-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <h4 id="stat-completed-tasks">0</h4>
+                            <p>Completed Tasks</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel border-rose">
+                        <div class="stat-icon icon-rose">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <h4 id="stat-overdue-tasks">0</h4>
+                            <p>Overdue Tasks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Visualizations -->
+                <div class="dashboard-visuals">
+                    <!-- Progress Ring Panel -->
+                    <div class="glass-panel progress-panel">
+                        <h3>Overall Progress</h3>
+                        <div class="progress-ring-container">
+                            <svg class="progress-ring" width="160" height="160">
+                                <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"/>
+                                <circle class="progress-ring-circle-fill" id="dashboard-progress-ring" stroke="url(#cyan-magenta-grad)" stroke-width="12" fill="transparent" r="70" cx="80" cy="80" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+                                <defs>
+                                    <linearGradient id="cyan-magenta-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f2fe"/>
+                                        <stop offset="100%" stop-color="#4facfe"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="progress-ring-value">
+                                <span id="progress-percentage-text">0%</span>
+                                <label>Done</label>
+                            </div>
+                        </div>
+                        <p class="progress-subtitle" id="progress-status-desc">Let's complete your first task!</p>
+                    </div>
+
+                    <!-- Aspect Segregation List -->
+                    <div class="glass-panel aspect-panel">
+                        <h3>Aspect Breakdown</h3>
+                        <div class="aspect-bar-list" id="dashboard-aspect-list">
+                            <!-- Populated dynamically by app.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Critical Tasks -->
+                <div class="glass-panel urgent-tasks-panel">
+                    <div class="panel-header">
+                        <h3>High Alert Deadlines</h3>
+                        <span class="badge badge-rose font-sm" id="urgent-count">0 Impending</span>
+                    </div>
+                    <div class="urgent-task-list" id="dashboard-urgent-tasks">
+                        <!-- Populated dynamically -->
+                        <div class="empty-state">
+                            <p>🎉 Excellent! No tasks are currently in urgent danger of passing deadlines.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: TASK BOARD -->
+            <section id="tab-tasks" class="tab-pane">
+                <div class="task-filters-bar glass-panel">
+                    <div class="filter-group">
+                        <label>Filter by Aspect:</label>
+                        <div class="aspect-filter-chips" id="task-aspect-chips">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="task-search-input" placeholder="Search tasks..." oninput="renderTasks()">
+                        </div>
+                        <div class="select-group">
+                            <label for="task-sort-select">Sort By:</label>
+                            <select id="task-sort-select" onchange="renderTasks()">
+                                <option value="deadline-asc">Deadline (Soonest First)</option>
+                                <option value="deadline-desc">Deadline (Furthest First)</option>
+                                <option value="priority-desc">Priority (High to Low)</option>
+                                <option value="xp-desc">XP Rewards</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-board-container" id="task-cards-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- TAB 3: FOCUS SPACE -->
+            <section id="tab-focus" class="tab-pane">
+                <div class="focus-layout">
+                    <!-- Timer Widget -->
+                    <div class="glass-panel focus-timer-panel">
+                        <h2>Focus Flow Space</h2>
+                        <p class="focus-subtitle">Disconnect from distractions. Connect with your goals.</p>
+                        
+                        <div class="focus-visualizer">
+                            <div class="pulse-ring" id="timer-pulse"></div>
+                            <div class="timer-display">
+                                <span id="timer-minutes">25</span>:<span id="timer-seconds">00</span>
+                            </div>
+                        </div>
+
+                        <div class="timer-controls">
+                            <button class="primary-btn btn-lg" id="timer-toggle-btn" onclick="toggleTimer()">Start Focus</button>
+                            <button class="secondary-btn" onclick="resetTimer()">Reset</button>
+                        </div>
+
+                        <div class="timer-modes">
+                            <button class="tab-btn active" id="mode-work" onclick="setTimerMode('work')">Focus (25m)</button>
+                            <button class="tab-btn" id="mode-short" onclick="setTimerMode('short')">Short Break (5m)</button>
+                            <button class="tab-btn" id="mode-long" onclick="setTimerMode('long')">Long Break (15m)</button>
+                        </div>
+                    </div>
+
+                    <!-- Focus Companion (Ambient Sounds & Motivation) -->
+                    <div class="glass-panel focus-settings-panel">
+                        <h3>Ambient Backgrounds</h3>
+                        <div class="ambient-grid">
+                            <div class="ambient-card" id="ambient-rain" onclick="toggleAmbient('rain')">
+                                <span class="ambient-emoji">🌧️</span>
+                                <span>Cozy Rain</span>
+                            </div>
+                            <div class="ambient-card" id="ambient-waves" onclick="toggleAmbient('waves')">
+                                <span class="ambient-emoji">🌊</span>
+                                <span>Ocean Waves</span>
+                            </div>
+                            <div class="ambient-card" id="ambient-forest" onclick="toggleAmbient('forest')">
+                                <span class="ambient-emoji">🌲</span>
+                                <span>Forest Wind</span>
+                            </div>
+                            <div class="ambient-card" id="ambient-white" onclick="toggleAmbient('white')">
+                                <span class="ambient-emoji">💡</span>
+                                <span>White Noise</span>
+                            </div>
+                        </div>
+
+                        <div class="focus-motivation-prompt">
+                            <h4>Why are you working now?</h4>
+                            <p id="focus-motivation-text">"Make today count for your health and growth."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: ASPECTS MANAGER -->
+            <section id="tab-categories" class="tab-pane">
+                <div class="aspects-manager-layout">
+                    <!-- Create/Edit Aspect Panel -->
+                    <div class="glass-panel aspect-creator-panel">
+                        <h3 id="aspect-form-title">Create New Aspect</h3>
+                        <form id="aspect-form" onsubmit="saveAspect(event)">
+                            <input type="hidden" id="aspect-id">
+                            <div class="form-group">
+                                <label for="aspect-name">Aspect Name</label>
+                                <input type="text" id="aspect-name" required placeholder="e.g. Health, Wife, Personal Growth">
+                            </div>
+                            <div class="form-group">
+                                <label for="aspect-color">Aspect Color (Theme)</label>
+                                <input type="color" id="aspect-color" value="#00f2fe">
+                            </div>
+                            <div class="form-group">
+                                <label for="aspect-icon">Emoji Symbol</label>
+                                <input type="text" id="aspect-icon" placeholder="e.g. 🧘, 💼, ❤️, 🏃" maxlength="4" required>
+                            </div>
+                            <button type="submit" class="primary-btn" style="width: 100%;">Save Aspect</button>
+                        </form>
+                    </div>
+
+                    <!-- Aspect List Panel -->
+                    <div class="glass-panel aspect-list-panel">
+                        <h3>Your Life Aspects</h3>
+                        <p class="panel-desc">We segregate tasks to align actions with the facets of life that matter most to you.</p>
+                        <div class="aspects-grid" id="aspects-manager-grid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: CREATE / EDIT TASK -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-card glass-panel">
+            <div class="modal-header">
+                <h3 id="task-modal-title">Create New Task</h3>
+                <button class="close-btn" onclick="closeCreateTaskModal()">&times;</button>
+            </div>
+            <form id="task-form" onsubmit="saveTask(event)">
+                <input type="hidden" id="task-id-field">
+                
+                <div class="form-group">
+                    <label for="task-title-input">Task Name / Goal</label>
+                    <input type="text" id="task-title-input" required placeholder="What do you want to accomplish?">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-aspect-select">Aspect</label>
+                        <select id="task-aspect-select" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-priority-select">Priority</label>
+                        <select id="task-priority-select" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-deadline-input">Task Deadline</label>
+                        <input type="datetime-local" id="task-deadline-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="task-motivation-input">Your Personal Motivation ("Why?")</label>
+                    <textarea id="task-motivation-input" rows="2" placeholder="Write down why this task matters. E.g. 'To make my wife smile', 'To keep my blood pressure in check'"></textarea>
+                </div>
+
+                <!-- Subtasks Area -->
+                <div class="subtasks-section">
+                    <div class="subtasks-header">
+                        <h4>Sub-tasks</h4>
+                        <button type="button" class="secondary-btn btn-sm" onclick="addSubtaskField()">+ Add Sub-task</button>
+                    </div>
+                    
+                    <div class="subtasks-fields-container" id="subtasks-fields-list">
+                        <!-- Dynamic subtask inputs will be added here -->
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn" onclick="closeCreateTaskModal()">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CELEBRATION / LEVEL UP -->
+    <div class="modal-overlay" id="celebration-modal">
+        <div class="celebration-card glass-panel text-center">
+            <div class="celebration-particles" id="celebration-particles"></div>
+            <div class="celebration-icon" id="celebration-badge">🏆</div>
+            <h2 id="celebration-title">Task Complete!</h2>
+            <p id="celebration-message">"Well done! You are taking control of your life and goals."</p>
+            
+            <div class="celebration-xp-display">
+                <span class="xp-value" id="celebration-xp-value">+50 XP</span>
+                <span class="xp-label">Gained</span>
+            </div>
+
+            <button class="primary-btn btn-lg" onclick="closeCelebrationModal()">Awesome, keep flowing!</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
