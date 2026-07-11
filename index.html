@@ -83,12 +83,6 @@
                     <h1 id="page-title">Dashboard Overview</h1>
                     <p id="current-date-display">Wednesday, July 8, 2026</p>
                 </div>
-                <div class="header-actions">
-                    <button class="primary-btn" id="create-task-btn" onclick="openCreateTaskModal()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        New Task
-                    </button>
-                </div>
             </header>
 
             <!-- TAB 1: DASHBOARD -->
@@ -400,6 +394,11 @@
             <button class="primary-btn btn-lg" onclick="closeCelebrationModal()">Awesome, keep flowing!</button>
         </div>
     </div>
+
+    <!-- Floating Action Button (FAB) -->
+    <button class="primary-btn" id="create-task-btn" onclick="openCreateTaskModal()" title="Create New Task">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
 
     <script src="app.js"></script>
 </body>

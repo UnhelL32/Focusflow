@@ -162,6 +162,16 @@ window.switchTab = function(tabId) {
     if (tabId === 'dashboard') {
         renderDashboardMetrics();
     }
+    
+    // Hide New Task button on the Focus page
+    const createTaskBtn = document.getElementById('create-task-btn');
+    if (createTaskBtn) {
+        if (tabId === 'focus') {
+            createTaskBtn.classList.add('hidden-btn');
+        } else {
+            createTaskBtn.classList.remove('hidden-btn');
+        }
+    }
 };
 
 // Render gamified XP and Level stats

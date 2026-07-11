@@ -1489,6 +1489,47 @@ body {
     100% { transform: translateY(-12px); }
 }
 
+/* Floating Action Button (FAB) */
+#create-task-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-blue));
+    color: #0b0c16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
+    z-index: 98;
+    transition: var(--transition-smooth);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#create-task-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: var(--transition-smooth);
+    margin: 0;
+}
+
+#create-task-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.55);
+}
+
+#create-task-btn:hover svg {
+    transform: rotate(90deg);
+}
+
+#create-task-btn.hidden-btn {
+    display: none !important;
+}
+
 /* Responsive Rules */
 .mobile-header {
     display: none;
@@ -1736,6 +1777,19 @@ body {
     .welcome-action button {
         width: 100%;
         padding: 0.75rem 0.5rem;
+    }
+
+    #create-task-btn {
+        bottom: 80px;
+        right: 1.25rem;
+        width: 48px;
+        height: 48px;
+        box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+    }
+
+    #create-task-btn svg {
+        width: 20px;
+        height: 20px;
     }
 }
 
