@@ -109,10 +109,13 @@ function saveState() {
     localStorage.setItem('focusflow_state', JSON.stringify(state));
 }
 
-// Update Date in Header
+// Update Date in Headers
 function updateDateDisplay() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', options);
+    const dateStr = new Date().toLocaleDateString('en-US', options);
+    document.querySelectorAll('.current-date-display').forEach(el => {
+        el.innerText = dateStr;
+    });
 }
 
 // Initialize components & setup forms
@@ -149,14 +152,7 @@ window.switchTab = function(tabId) {
     }
     if (activeBtn) activeBtn.classList.add('active');
     
-    // Page Title updates
-    const titleMap = {
-        'dashboard': 'Dashboard Overview',
-        'tasks': 'Task Board',
-        'focus': 'Focus Space',
-        'categories': 'Manage Aspects'
-    };
-    document.getElementById('page-title').innerText = titleMap[tabId] || 'FocusFlow';
+    // Page Title updates (Handled statically in local headers)
     
     // If returning to dashboard, refresh metrics
     if (tabId === 'dashboard') {

@@ -77,66 +77,67 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Header with notifications / dates -->
-            <header class="content-header">
-                <div class="header-info">
-                    <h1 id="page-title">Dashboard Overview</h1>
-                    <p id="current-date-display">Wednesday, July 8, 2026</p>
-                </div>
-            </header>
-
             <!-- TAB 1: DASHBOARD -->
             <section id="tab-dashboard" class="tab-pane active">
-                <!-- Welcome & Motivation Panel -->
-                <div class="glass-panel welcome-panel">
-                    <div class="welcome-text">
-                        <h3>Welcome Back, Achiever!</h3>
-                        <p class="motivation-quote" id="motivational-quote-display">"The secret of getting ahead is getting started."</p>
-                        <p class="quote-author" id="motivational-author-display">— Mark Twain</p>
+                <header class="content-header">
+                    <div class="header-info">
+                        <h1>Dashboard Overview</h1>
+                        <p class="current-date-display">Wednesday, July 8, 2026</p>
                     </div>
-                    <div class="welcome-action">
-                        <button class="secondary-btn btn-sm" onclick="getNewQuote()">
-                            💥 Get Spark
-                        </button>
+                </header>
+                <!-- Top Row (Welcome & Stats Grid) -->
+                <div class="dashboard-top-row">
+                    <!-- Welcome & Motivation Panel -->
+                    <div class="glass-panel welcome-panel">
+                        <div class="welcome-text">
+                            <h3>Welcome Back, Achiever!</h3>
+                            <p class="motivation-quote" id="motivational-quote-display">"The secret of getting ahead is getting started."</p>
+                            <p class="quote-author" id="motivational-author-display">— Mark Twain</p>
+                        </div>
+                        <div class="welcome-action">
+                            <button class="secondary-btn btn-sm" onclick="getNewQuote()">
+                                💥 Get Spark
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Stats Counters Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card glass-panel border-cyan">
-                        <div class="stat-icon icon-cyan">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    <!-- Stats Counters Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card glass-panel border-cyan">
+                            <div class="stat-icon icon-cyan">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="stat-total-tasks">0</h4>
+                                <p>Total Tasks</p>
+                            </div>
                         </div>
-                        <div class="stat-info">
-                            <h4 id="stat-total-tasks">0</h4>
-                            <p>Total Tasks</p>
+                        <div class="stat-card glass-panel border-amber">
+                            <div class="stat-icon icon-amber">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="stat-pending-tasks">0</h4>
+                                <p>Pending Tasks</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="stat-card glass-panel border-amber">
-                        <div class="stat-icon icon-amber">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <div class="stat-card glass-panel border-green">
+                            <div class="stat-icon icon-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="stat-completed-tasks">0</h4>
+                                <p>Completed Tasks</p>
+                            </div>
                         </div>
-                        <div class="stat-info">
-                            <h4 id="stat-pending-tasks">0</h4>
-                            <p>Pending Tasks</p>
-                        </div>
-                    </div>
-                    <div class="stat-card glass-panel border-green">
-                        <div class="stat-icon icon-green">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h4 id="stat-completed-tasks">0</h4>
-                            <p>Completed Tasks</p>
-                        </div>
-                    </div>
-                    <div class="stat-card glass-panel border-rose">
-                        <div class="stat-icon icon-rose">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h4 id="stat-overdue-tasks">0</h4>
-                            <p>Overdue Tasks</p>
+                        <div class="stat-card glass-panel border-rose">
+                            <div class="stat-icon icon-rose">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="stat-overdue-tasks">0</h4>
+                                <p>Overdue Tasks</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -172,18 +173,18 @@
                             <!-- Populated dynamically by app.js -->
                         </div>
                     </div>
-                </div>
 
-                <!-- Upcoming Critical Tasks -->
-                <div class="glass-panel urgent-tasks-panel">
-                    <div class="panel-header">
-                        <h3>High Alert Deadlines</h3>
-                        <span class="badge badge-rose font-sm" id="urgent-count">0 Impending</span>
-                    </div>
-                    <div class="urgent-task-list" id="dashboard-urgent-tasks">
-                        <!-- Populated dynamically -->
-                        <div class="empty-state">
-                            <p>🎉 Excellent! No tasks are currently in urgent danger of passing deadlines.</p>
+                    <!-- Upcoming Critical Tasks -->
+                    <div class="glass-panel urgent-tasks-panel">
+                        <div class="panel-header">
+                            <h3>High Alert Deadlines</h3>
+                            <span class="badge badge-rose font-sm" id="urgent-count">0 Impending</span>
+                        </div>
+                        <div class="urgent-task-list" id="dashboard-urgent-tasks">
+                            <!-- Populated dynamically -->
+                            <div class="empty-state">
+                                <p>🎉 Excellent! No tasks are currently in urgent danger of passing deadlines.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
